@@ -43,7 +43,7 @@ public class Room implements Serializable
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "room_type_id", nullable = false)
-	private RoomTypes roomType;
+	private RoomType roomType;
 	
 	@Column(name="is_available")
 	private Boolean available;
@@ -64,11 +64,11 @@ public class Room implements Serializable
 		this.roomNo = roomNo;
 	}
 
-	public RoomTypes getRoomType() {
+	public RoomType getRoomType() {
 		return roomType;
 	}
 
-	public void setRoomType(RoomTypes roomType) {
+	public void setRoomType(RoomType roomType) {
 		this.roomType = roomType;
 	}
 

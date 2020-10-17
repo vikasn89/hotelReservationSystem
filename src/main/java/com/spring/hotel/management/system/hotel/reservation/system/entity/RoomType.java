@@ -1,12 +1,16 @@
 package com.spring.hotel.management.system.hotel.reservation.system.entity;
 
 import java.io.Serializable;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -17,7 +21,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name="room_types", uniqueConstraints = {@UniqueConstraint(name="room_type_unq_index", columnNames = {"room_type"}) })
-public class RoomTypes implements Serializable{
+public class RoomType implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -32,6 +36,11 @@ public class RoomTypes implements Serializable{
 	
 	@Column(name="price_per_night", nullable = false)
 	private Long pricePerNight;
+	
+	@OneToMany(mappedBy = "roomType", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Room> rooms;
+	
 
 	public Long getId() {
 		return id;
@@ -57,9 +66,18 @@ public class RoomTypes implements Serializable{
 		this.pricePerNight = pricePerNight;
 	}
 
+	public Set<Room> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(Set<Room> rooms) {
+		this.rooms = rooms;
+	}
+
 	@Override
 	public String toString() {
-		return "RoomTypes [id=" + id + ", roomType=" + roomType + ", pricePerNight=" + pricePerNight + "]";
+		return "RoomType [id=" + id + ", roomType=" + roomType
+				+ ", pricePerNight=" + pricePerNight + ", rooms=" + rooms + "]";
 	}
-		
+
 }

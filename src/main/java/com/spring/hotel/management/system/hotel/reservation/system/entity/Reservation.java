@@ -30,7 +30,7 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name="reservation", uniqueConstraints ={@UniqueConstraint(name="reservation_no_unq_index", columnNames = {"reservation_no"})
+@Table(name="reservations", uniqueConstraints ={@UniqueConstraint(name="reservation_no_unq_index", columnNames = {"reservation_no"})
 ,@UniqueConstraint(name="customer_email_unq_index", columnNames = {"email_id"} )})
 public class Reservation implements Serializable {
 
@@ -53,18 +53,16 @@ public class Reservation implements Serializable {
     )
     private Set<Customer> guests = new HashSet<>();
 	
-    @OneToOne(mappedBy = "registration") 
+    @OneToOne(mappedBy = "reservation",fetch = FetchType.EAGER , cascade = {CascadeType.ALL}) 
 	private Room room;
 	
     @Column(name="no_of_guests",  nullable = false)
 	private Integer noOfGuests;
 	
     @Column(name="check_in_dt", nullable = false)
-    @Temporal(TemporalType.DATE)
 	private LocalDate checkInDt;
 	
     @Column(name="check_out_dt")
-    @Temporal(TemporalType.DATE)
 	private LocalDate checkOutDt;
 
 	public Long getId() {

@@ -3,11 +3,12 @@
  */
 package com.spring.hotel.management.system.hotel.reservation.system.services;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import com.spring.hotel.management.system.hotel.reservation.system.entity.ResponseEntityModel;
+import com.spring.hotel.management.system.hotel.reservation.system.entity.Reservation;
+import com.spring.hotel.management.system.hotel.reservation.system.model.ReservationModel;
 import com.spring.hotel.management.system.hotel.reservation.system.repositories.IReservationRepository;
 
 /**
@@ -21,10 +22,11 @@ public class ReservationService
 	@Autowired
 	IReservationRepository reservsationRepository;
 	
-	@PostMapping("reservation")
-	public <T> ResponseEntityModel getReservations()
+	
+	public ReservationModel addReservations(ReservationModel reservModel) throws Exception
 	{
-		
+		Reservation reserv = new Reservation();
+		reserv.setReservationNo(UUID.randomUUID().toString());
 		
 		return null;
 	}
