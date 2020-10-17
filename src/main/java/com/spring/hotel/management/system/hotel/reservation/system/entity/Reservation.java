@@ -9,18 +9,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.persistence.*;
 
 /**
@@ -53,7 +41,8 @@ public class Reservation implements Serializable {
     )
     private Set<Customer> guests = new HashSet<>();
 	
-    @OneToOne(mappedBy = "reservation",fetch = FetchType.EAGER , cascade = {CascadeType.ALL}) 
+    @OneToOne(fetch = FetchType.EAGER , cascade = {CascadeType.ALL}) 
+	@JoinColumn(name = "room_id", nullable = false)
 	private Room room;
 	
     @Column(name="no_of_guests",  nullable = false)
