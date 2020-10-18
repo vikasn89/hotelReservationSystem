@@ -45,7 +45,7 @@ public class RoomTypeService {
 	 {
 		 Optional<RoomType> roomTypesById = roomTypeRepository.findById(id);
 		 RoomTypeModel roomTypeModel = new RoomTypeModel();
-		 if(roomTypesById != null && roomTypesById.isPresent())
+		 if(roomTypesById != null && roomTypesById.isPresent()== true)
 		 { 
 			 RoomType roomTypeById = roomTypesById.get();
 			 roomTypeModel =  new RoomTypeModel(roomTypeById.getId(), roomTypeById.getRoomType(), roomTypeById.getPricePerNight(), roomTypeById.getFeatures());
