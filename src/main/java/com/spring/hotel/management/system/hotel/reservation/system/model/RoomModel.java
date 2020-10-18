@@ -17,6 +17,25 @@ public class RoomModel {
 	private RoomTypeModel roomType;
 	
 	private Boolean available;
+	
+	public RoomModel() {
+		super();
+	}
+
+	/**
+	 * @param id
+	 * @param roomNo
+	 * @param roomType
+	 * @param available
+	 */
+	public RoomModel(Long id, String roomNo, RoomTypeModel roomType,
+			Boolean available) {
+		super();
+		this.id = id;
+		this.roomNo = roomNo;
+		this.roomType = roomType;
+		this.available = available;
+	}
 
 	public Long getId() {
 		return id;

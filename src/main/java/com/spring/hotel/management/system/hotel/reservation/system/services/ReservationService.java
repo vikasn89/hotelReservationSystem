@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.spring.hotel.management.system.hotel.reservation.system.controller.ReservationRestController;
 import com.spring.hotel.management.system.hotel.reservation.system.entity.Reservation;

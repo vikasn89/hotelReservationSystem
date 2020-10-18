@@ -63,4 +63,30 @@ public class RoomTypeService {
 		 }
 		 return roomTypeModel;
 	 }
+	 
+	 public RoomTypeModel RoomTypeEntityToModelConversion(RoomType roomType)
+	 {
+		 RoomTypeModel roomTypeModel = new RoomTypeModel();
+		 if(roomType != null )
+		 {
+			 if(roomType.getFeatures()!= null && roomType.getFeatures().isEmpty() == false) roomTypeModel.setFeatures(roomType.getFeatures());
+				if (roomType.getId() != null) roomTypeModel.setId(roomType.getId());
+				if(roomType.getPricePerNight()!= null) roomTypeModel.setPricePerNight(roomType.getPricePerNight());
+				if(roomType.getRoomType()!= null && roomType.getRoomType().isEmpty() ==false) roomTypeModel.setRoomType(roomType.getRoomType());
+		 }
+		 return roomTypeModel;
+	 }
+	 
+	 public RoomType RoomTypeModelToEntityConversion(RoomTypeModel roomType)
+	 {
+		 RoomType roomTypeEntity = new RoomType();
+		 if(roomType != null )
+		 {
+			if(roomType.getFeatures()!= null && roomType.getFeatures().isEmpty() == false) roomTypeEntity.setFeatures(roomType.getFeatures());
+			if (roomType.getId() != null) roomTypeEntity.setId(roomType.getId());
+			if(roomType.getPricePerNight()!= null) roomTypeEntity.setPricePerNight(roomType.getPricePerNight());
+			if(roomType.getRoomType()!= null && roomType.getRoomType().isEmpty() ==false) roomTypeEntity.setRoomType(roomType.getRoomType());
+		 }
+		 return roomTypeEntity;
+	 }
 }
