@@ -5,6 +5,8 @@ package com.spring.hotel.management.system.hotel.reservation.system.services;
 
 import java.util.ArrayList;
 
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,7 @@ public class CustomerService implements UserDetailsService{
 		    		customer.getPassword(), new ArrayList<>());
 	}
 	
-	
+	@Transactional(rollbackOn = Exception.class)
 	public Customer registerCustomer(CustomerModel customerModel) throws Exception
 	{
 		Customer customerEntity = new Customer();

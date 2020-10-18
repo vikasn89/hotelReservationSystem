@@ -3,6 +3,8 @@
  */
 package com.spring.hotel.management.system.hotel.reservation.system.repositories;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -16,5 +18,9 @@ import com.spring.hotel.management.system.hotel.reservation.system.entity.RoomTy
 @Repository
 public interface IRoomTypesRepository extends JpaRepository<RoomType, Long>
 {
+	Optional<RoomType> findById(Long id);
+	RoomType findByRoomType(String roomType);
+	
+	
 	
 }
