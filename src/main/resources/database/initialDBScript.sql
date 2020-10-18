@@ -85,3 +85,11 @@ ALTER TABLE hotel.customer
 
 ALTER TABLE hotel.reservations
     OWNER to admin;
+    
+ -- ######################################## Input scripts ############################################
+
+--------------------------- Room Type ----------------------------------------
+INSERT INTO hotel.room_types(id,room_type, price_per_night, features) VALUES (1,'Deluxe Rooms', 7000, 'Queen Size Bed');
+INSERT INTO hotel.room_types(id,room_type, price_per_night, features) VALUES (2,'Luxury Rooms', 8500, 'Queen Size Bed and Pool Facing');
+INSERT INTO hotel.room_types(id,room_type, price_per_night, features) VALUES (3,'Luxury Suites', 12000, 'King Size Bed and Pool Facing');
+INSERT INTO hotel.room_types(id,room_type, price_per_night, features) VALUES (4,'Presidential Suites', 20000, 'King Size Bed, Pool Facing with a Gym');

@@ -41,6 +41,8 @@ public class RoomType implements Serializable{
             cascade = CascadeType.ALL)
     private Set<Room> rooms;
 	
+	@Column(name="features")
+	private String features;
 
 	public Long getId() {
 		return id;
@@ -74,10 +76,19 @@ public class RoomType implements Serializable{
 		this.rooms = rooms;
 	}
 
+	public String getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(String features) {
+		this.features = features;
+	}
+
 	@Override
 	public String toString() {
 		return "RoomType [id=" + id + ", roomType=" + roomType
-				+ ", pricePerNight=" + pricePerNight + ", rooms=" + rooms + "]";
+				+ ", pricePerNight=" + pricePerNight + ", rooms=" + rooms
+				+ ", features=" + features + "]";
 	}
 
 }

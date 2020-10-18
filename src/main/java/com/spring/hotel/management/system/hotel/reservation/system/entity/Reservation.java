@@ -19,7 +19,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="reservations", uniqueConstraints ={@UniqueConstraint(name="reservation_no_unq_index", columnNames = {"reservation_no"})
-,@UniqueConstraint(name="customer_email_unq_index", columnNames = {"email_id"} )})
+})
 public class Reservation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -41,7 +41,7 @@ public class Reservation implements Serializable {
     )
     private Set<Customer> guests = new HashSet<>();
 	
-    @OneToOne(fetch = FetchType.EAGER , cascade = {CascadeType.ALL}) 
+    @OneToOne(fetch = FetchType.EAGER ) 
 	@JoinColumn(name = "room_id", nullable = false)
 	private Room room;
 	

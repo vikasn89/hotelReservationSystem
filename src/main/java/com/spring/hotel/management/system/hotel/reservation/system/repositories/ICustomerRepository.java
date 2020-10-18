@@ -14,4 +14,17 @@ import com.spring.hotel.management.system.hotel.reservation.system.entity.Custom
  */
 public interface ICustomerRepository extends JpaRepository<Customer, Long>{
 
+	/**
+	 * Query yo fetch Customer details by his/her username 
+	 * @Param userName
+	   @return customer Object
+	 */
+	Customer findByUserName(String username);
+	
+	/**Query yo fetch Customer details by his/her username and password
+	 * @Param username, password
+	   @return customer Object
+	 */
+	Customer findByUserNameAndPassword(String username, String password);
+
 }
