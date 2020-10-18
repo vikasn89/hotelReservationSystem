@@ -3,6 +3,8 @@
  */
 package com.spring.hotel.management.system.hotel.reservation.system.util;
 
+import java.time.format.DateTimeFormatter;
+
 /**
  * @author Vikas Ramesh Kondvilkar
  * @className ConstantUtil.java
@@ -64,6 +66,6 @@ public final class ConstantsUtil
 	  public static final String CHECK_IN_DATE = "checkInDt";
 	  public static final String CHECK_OUT_DATE = "checkOutDt";
 	  
-	  
+	  public final static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/YYYY");
 	  
 }

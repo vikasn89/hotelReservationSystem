@@ -3,6 +3,8 @@
  */
 package com.spring.hotel.management.system.hotel.reservation.system.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -36,9 +38,6 @@ public class ReservationService
 	@Autowired
 	IReservationRepository reservsationRepository;
 	
-	
-	
-
 	/**
 	 * @param body 
 	 * @Param
@@ -85,14 +84,52 @@ public class ReservationService
 	    listOfMap.add(fieldMap);
 	    
 	    fieldMap = new HashMap<>();
-	    fieldMap.put(ConstantsUtil.FIELD_NAME, ConstantsUtil.USER_NAME);
-	    fieldMap.put(ConstantsUtil.FIELD_VALUE, requestBody.get(ConstantsUtil.USER_NAME));
+	    fieldMap.put(ConstantsUtil.FIELD_NAME, ConstantsUtil.CHECK_IN_DATE);
+	    fieldMap.put(ConstantsUtil.FIELD_VALUE, requestBody.get(ConstantsUtil.CHECK_IN_DATE));
 	    validationRulesEnum = new ArrayList<HashMap<Enum, String>>();
 	    rule = new HashMap<>();
 	    rule.put(RuleEnum.NOT_EMPTY, "message");
 	    validationRulesEnum.add(rule);
 	    fieldMap.put(ConstantsUtil.VALIDATION, validationRulesEnum);
 	    listOfMap.add(fieldMap);
+	    if(requestBody.get(ConstantsUtil.CHECK_IN_DATE)!= null && requestBody.get(ConstantsUtil.CHECK_IN_DATE).isEmpty() == false)
+	    {
+	    	LocalDate checkIndate = StringToLocalDate(requestBody.get(ConstantsUtil.CHECK_IN_DATE));
+	    	LocalDate currentDate = LocalDate.parse(LocalDate.now().toString(),ConstantsUtil.DATE_FORMATTER);
+	    	
+	    	if(checkIndate.compareTo(currentDate)<0)
+	    	{
+	    		fieldMap = new HashMap<>();
+	    	    fieldMap.put(ConstantsUtil.FIELD_NAME, ConstantsUtil.CHECK_IN_DATE);
+	    	    fieldMap.put(ConstantsUtil.FIELD_VALUE, requestBody.get(ConstantsUtil.CHECK_IN_DATE));
+	    	    validationRulesEnum = new ArrayList<HashMap<Enum, String>>();
+	    	    rule = new HashMap<>();
+	    	    rule.put(RuleEnum.NOT_EMPTY, "message");
+	    	    validationRulesEnum.add(rule);
+	    	    fieldMap.put(ConstantsUtil.VALIDATION, validationRulesEnum);
+	    	    listOfMap.add(fieldMap);
+	    	}
+	    }
 
+	}
+	
+	public String localDateToString(LocalDate date)
+	{
+		String dateString = null;
+		if(date!= null)
+		{
+			dateString = date.format(ConstantsUtil.DATE_FORMATTER);
+		}
+		return dateString;
+	}
+	
+	public LocalDate StringToLocalDate(String dateString)
+	{
+		LocalDate date = null ;
+		if(dateString!= null && dateString.isEmpty()==false)
+		{
+			date = LocalDate.parse(dateString, ConstantsUtil.DATE_FORMATTER);
+		}
+		return date;
 	}
 }
