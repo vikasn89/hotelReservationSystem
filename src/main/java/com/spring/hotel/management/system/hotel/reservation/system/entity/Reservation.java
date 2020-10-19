@@ -32,14 +32,9 @@ public class Reservation implements Serializable {
 	@Column(name="reservation_no", updatable = false, nullable = false)
 	private String reservationNo;
 	
-	
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "reservation_customers",
-            joinColumns = @JoinColumn(name = "reservation_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "cust_id", referencedColumnName = "id")
-    )
-    private Set<Customer> guests = new HashSet<>();
+	@OneToOne(fetch = FetchType.EAGER ) 
+	@JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 	
     @OneToOne(fetch = FetchType.EAGER ) 
 	@JoinColumn(name = "room_id", nullable = false)
@@ -54,6 +49,9 @@ public class Reservation implements Serializable {
     @Column(name="check_out_dt")
 	private LocalDate checkOutDt;
 
+    @Column(name="reservation_amount")
+    private Long reservationAmount;
+    
 	public Long getId() {
 		return id;
 	}
@@ -70,12 +68,12 @@ public class Reservation implements Serializable {
 		this.reservationNo = reservationNo;
 	}
 
-	public Set<Customer> getGuests() {
-		return guests;
+	public Customer getCustomer() {
+		return customer;
 	}
 
-	public void setGuests(Set<Customer> guests) {
-		this.guests = guests;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
 
 	public Room getRoom() {
@@ -109,8 +107,13 @@ public class Reservation implements Serializable {
 	public void setCheckOutDt(LocalDate checkOutDt) {
 		this.checkOutDt = checkOutDt;
 	}
+
+	public Long getReservationAmount() {
+		return reservationAmount;
+	}
+
+	public void setReservationAmount(Long reservationAmount) {
+		this.reservationAmount = reservationAmount;
+	}
     
-    
-	
-	
 }

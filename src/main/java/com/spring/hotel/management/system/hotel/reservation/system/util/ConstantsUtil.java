@@ -65,6 +65,7 @@ public final class ConstantsUtil
 	  public static final String ROOM_TYPE ="roomType";
 	  public static final String CHECK_IN_DATE = "checkInDt";
 	  public static final String CHECK_OUT_DATE = "checkOutDt";
+	  public static final String NO_OF_GUESTS = "noOfGuests";
 	  
 	  public final static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/YYYY");
 	  

@@ -4,20 +4,11 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import org.springframework.stereotype.Service;
 
+
 /**
- *
- * Encrypts the given string into sha256
- * <p>
- *
- * Created on 10-Feb-2020 at 1:31:39 pm
- *
- * Package Name: org.unicef.mis.service
- *
- * Project Name: UNICEF_HVS_MIS
- *
- * @author Aparna Satpute
- * @author Rahul Babhare
- *
+ * @author Vikas Ramesh Kondvilkar
+ * @className SHA256EncryptionUtil.java
+   @created 19-Oct-2020
  */
 @Service
 public class SHA256EncryptionUtil {

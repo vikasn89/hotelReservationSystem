@@ -43,6 +43,9 @@ public class RoomType implements Serializable{
 	
 	@Column(name="features")
 	private String features;
+	
+	@Column(name="capacity")
+	private String capacity;
 
 	public Long getId() {
 		return id;

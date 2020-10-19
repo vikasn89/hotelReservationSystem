@@ -47,7 +47,24 @@ public class ReservationRestController
 		  return reservationService.checkRoomAvailability(body) ;
 	  }
 
-
+	  @PostMapping(value="/reservation")
+	  public ResponseEntity<?> roomReservation(@RequestBody Map<String, String> body) throws Exception
+	  {
+		  
+		  return reservationService.roomReservation(body) ;
+	  }
 	
-
+	  @PostMapping(value="/reservationDetails")
+	  public ResponseEntity<?> roomReservationDetails(@RequestBody Map<String, String> body) throws Exception
+	  {
+		  
+		  return reservationService.roomReservationDetails(body) ;
+	  }
+	  
+	  @PostMapping(value="/checkout")
+	  public ResponseEntity<?> roomCheckout(@RequestBody Map<String, String> body) throws Exception
+	  {
+		  
+		  return reservationService.roomCheckout(body) ;
+	  }
 }
