@@ -36,13 +36,11 @@ public final class ConstantsUtil
 	  public static final String SUCCESS_MESSAGE = "Success";
 	  public static final String SUCCESS_MESSAGE_TRUE = "TRUE";
 	  public static final String SUCCESS_MESSAGE_FALSE = "FALSE";
-	  public static final String INVALID_TOKEN_MESSAGE =
-	      " Either user have deactivated or unable to validate the session. Please contact Administrator";
 	  public static final String ERROR_MESSAGE = "Error";
 	  public static final String DATA_NOT_FOUND = "Data not available";
-	  public static final Boolean IS_USED_TRUE = true;
+	  public static final Boolean TRUE = true;
 	  public static final String IS_USED = "isUsed";
-	  public static final Boolean IS_USED_FALSE = false;
+	  public static final Boolean FALSE = false;
 	  public static final String AVAILABLE= "Room is available";
 	  public static final String NOT_AVAILABLE= "Room is not available";
 	  public static final String GUESTS_MORE_THAN_CAPACITY= "Number of guest more than capacity";
@@ -71,5 +69,6 @@ public final class ConstantsUtil
 	  public static final String NO_OF_GUESTS = "noOfGuests";
 	  
 	  public final static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+	public static final Object DEACTIVATED_USER = "deactivatedUser";
 	  
 }

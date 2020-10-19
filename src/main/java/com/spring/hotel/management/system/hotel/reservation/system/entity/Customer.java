@@ -40,6 +40,9 @@ public class Customer implements Serializable
 	
 	@Column(name="contact_no", nullable = false)
 	private String contactNo;
+	
+	@Column(name = "is_active", columnDefinition = "boolean default true")
+	  private Boolean isActive;
 
 	public Long getId() {
 		return id;
@@ -97,9 +100,21 @@ public class Customer implements Serializable
 		this.contactNo = contactNo;
 	}
 
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", emailId=" + emailId + ", contactNo=" + contactNo + "]";
+		return "Customer [id=" + id + ", userName=" + userName + ", password="
+				+ password + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", emailId=" + emailId + ", contactNo=" + contactNo
+				+ ", isActive=" + isActive + "]";
 	}
+
+	
 }

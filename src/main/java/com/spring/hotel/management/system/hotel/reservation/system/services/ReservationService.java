@@ -24,9 +24,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.spring.hotel.management.system.hotel.reservation.system.Exceptions.CustomException;
+import com.spring.hotel.management.system.hotel.reservation.system.entity.Customer;
 import com.spring.hotel.management.system.hotel.reservation.system.entity.Reservation;
 import com.spring.hotel.management.system.hotel.reservation.system.entity.Room;
 import com.spring.hotel.management.system.hotel.reservation.system.entity.RoomType;
+import com.spring.hotel.management.system.hotel.reservation.system.repositories.ICustomerRepository;
 import com.spring.hotel.management.system.hotel.reservation.system.repositories.IReservationRepository;
 import com.spring.hotel.management.system.hotel.reservation.system.repositories.IRoomRerpository;
 import com.spring.hotel.management.system.hotel.reservation.system.repositories.IRoomTypesRepository;
@@ -62,8 +64,14 @@ public class ReservationService
 	@Autowired
 	IReservationRepository reservationRepository;
 	
-	  @Autowired
-	  private MessageSource messageSource;
+	@Autowired
+	private MessageSource messageSource;
+	
+	@Autowired
+	CustomerService customerService;
+	
+	@Autowired
+	ICustomerRepository customerRepository;
 	
 	/**
 	 * @param body 
@@ -300,7 +308,7 @@ public class ReservationService
 
 		validateRoomAvailibilityFilelds(requestBody);
 		Reservation reservationEntity = new Reservation();
-		
+		Customer customer  = new Customer();
 		RoomType roomtype= roomTyperepository.findByRoomType(requestBody.get(ConstantsUtil.ROOM_TYPE));
 		LocalDate checkIndate = StringToLocalDate(requestBody.get(ConstantsUtil.CHECK_IN_DATE));
 		LocalDate checkOutdate = StringToLocalDate(requestBody.get(ConstantsUtil.CHECK_OUT_DATE));
@@ -309,16 +317,40 @@ public class ReservationService
 		Room room = roomRepository.findByRoomType(roomtype).stream().findFirst().orElse(null);
 		Long reservationNo = randomUUid.timestamp();
 		 SuccessResponse successResponse = new SuccessResponse();
+		 int days = checkOutdate.compareTo(checkIndate);
+		 
+		 
+		 String username = customerService.getCurrentLoggedInUser();
+		 
+		 if(username != null && username.isEmpty() == false)
+		 {
+			 customer = customerRepository.findByUserName(username);
+		 }else {
+			 successResponse.setMessage(ConstantsUtil.INVALID_USERNAME);
+			    successResponse.setStatus(ConstantsUtil.STATUS_CODE_UNAUTHORIZED);
+			    return new ResponseEntity<>(successResponse, HttpStatus.OK);
+		 }
+		 
 		if(room!= null && room.getId()!= null)
 		{	
+			room.setAvailable(false);
+			roomRepository.save(room);
+			
 			reservationEntity.setReservationNo(reservationNo.toString());
 			reservationEntity.setRoom(room);
 			reservationEntity.setCheckInDt(checkIndate);
 			reservationEntity.setCheckOutDt(checkOutdate);
-			//reservationEntity.setGuests(guests);
+			reservationEntity.setCustomer(customer);
 			reservationEntity.setNoOfGuests(noOfGuests);
+			reservationEntity.setReservationAmount(days*roomtype.getPricePerNight());
+			reservationRepository.save(reservationEntity);
+			
+		}else
+		{
+			successResponse.setMessage(ConstantsUtil.ERROR_MESSAGE);
+		    successResponse.setStatus(ConstantsUtil.STATUS_CODE_DATA_NOT_AVAILABLE);
+		    return new ResponseEntity<>(successResponse, HttpStatus.OK);
 		}
-		reservationRepository.save(reservationEntity);
 		
 		 successResponse.setMessage(ConstantsUtil.SUCCESS_MESSAGE);
 		    successResponse.setStatus(ConstantsUtil.STATUS_CODE_SUCCESS);
@@ -340,7 +372,8 @@ public class ReservationService
 	   @return
 	 */
 	public ResponseEntity<?> roomCheckout(Map<String, String> body) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 }

@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.session.SessionRegistryImpl;
 
+import com.spring.hotel.management.system.hotel.reservation.system.util.ActiveUserStore;
+
 @SpringBootApplication
 public class Application {
 
@@ -14,7 +16,7 @@ public class Application {
 	}
 
 	@Bean
-	SessionRegistry sessionRegistry() {
-		return new SessionRegistryImpl();
+	public ActiveUserStore activeUserStore(){
+	    return new ActiveUserStore();
 	}
 }

@@ -60,6 +60,7 @@ CREATE INDEX fki_room_type_foreign_index
     last_name character varying(10),
     email_id character varying(25) NOT NULL,
     contact_no character varying(12) NOT NULL,
+    isActive boolean,
     PRIMARY KEY (id),
     CONSTRAINT customer_username_unq_index UNIQUE (username),
     CONSTRAINT customer_email_unq_index UNIQUE (email_id)
@@ -90,7 +91,7 @@ ALTER TABLE hotel.reservations
  -- ######################################## Input scripts ############################################
 
 --------------------------- Room Type ----------------------------------------
-INSERT INTO hotel.room_types(id,room_type, price_per_night, features) VALUES (1,'Deluxe Rooms', 7000, 'Queen Size Bed');
-INSERT INTO hotel.room_types(id,room_type, price_per_night, features) VALUES (2,'Luxury Rooms', 8500, 'Queen Size Bed and Pool Facing');
-INSERT INTO hotel.room_types(id,room_type, price_per_night, features) VALUES (3,'Luxury Suites', 12000, 'King Size Bed and Pool Facing');
-INSERT INTO hotel.room_types(id,room_type, price_per_night, features) VALUES (4,'Presidential Suites', 20000, 'King Size Bed, Pool Facing with a Gym');
+INSERT INTO hotel.room_types(id,room_type, price_per_night, features, capacity) VALUES (1,'Deluxe Rooms', 7000, 'Queen Size Bed',2);
+INSERT INTO hotel.room_types(id,room_type, price_per_night, features, capacity) VALUES (2,'Luxury Rooms', 8500, 'Queen Size Bed and Pool Facing',2);
+INSERT INTO hotel.room_types(id,room_type, price_per_night, features, capacity) VALUES (3,'Luxury Suites', 12000, 'King Size Bed and Pool Facing',4);
+INSERT INTO hotel.room_types(id,room_type, price_per_night, features, capacity) VALUES (4,'Presidential Suites', 20000, 'King Size Bed, Pool Facing with a Gym',6);

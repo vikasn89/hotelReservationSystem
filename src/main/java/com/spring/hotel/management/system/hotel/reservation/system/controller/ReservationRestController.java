@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
    @created 16-Oct-2020
  */
 @RestController
-@RequestMapping("/hotel")
+@RequestMapping("/")
 public class ReservationRestController 
 {
 	  private static final Logger logger = LoggerFactory.getLogger(ReservationRestController.class);
@@ -40,21 +40,21 @@ public class ReservationRestController
 		 * @Param
 		   @return
 		 */
-	  @PostMapping(value="/checkRoomAvailability")
+	  @PostMapping(value="checkRoomAvailability")
 	  public ResponseEntity<?> checkRoomAvailability(@RequestBody Map<String, String> body) throws Exception
 	  {
 		  
 		  return reservationService.checkRoomAvailability(body) ;
 	  }
 
-	  @PostMapping(value="/reservation")
+	  @PostMapping(value="reservation")
 	  public ResponseEntity<?> roomReservation(@RequestBody Map<String, String> body) throws Exception
 	  {
 		  
 		  return reservationService.roomReservation(body) ;
 	  }
 	
-	  @PostMapping(value="/reservationDetails")
+	  @PostMapping(value="reservationDetails")
 	  public ResponseEntity<?> roomReservationDetails(@RequestBody Map<String, String> body) throws Exception
 	  {
 		  

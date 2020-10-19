@@ -10,6 +10,9 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -45,6 +48,11 @@ public class CustomerService implements UserDetailsService{
 		    		customer.getPassword(), new ArrayList<>());
 	}
 	
+	public Customer getCustomerByUserName(String username)
+	{
+		return customerRepository.findByUserName(username);
+	}
+	
 	@Transactional(rollbackOn = Exception.class)
 	public Customer registerCustomer(CustomerModel customerModel) throws Exception
 	{
@@ -59,5 +67,13 @@ public class CustomerService implements UserDetailsService{
 		return customer;
 	}
 	
-	
+	public String getCurrentLoggedInUser()
+	{
+		String loggedUsername = null;
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (!(authentication instanceof AnonymousAuthenticationToken)) {
+			loggedUsername = authentication.getName();
+		}
+		return loggedUsername;
+	}
 }
