@@ -5,7 +5,6 @@ package com.spring.hotel.management.system.hotel.reservation.system.services;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,23 +23,16 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-
 import com.spring.hotel.management.system.hotel.reservation.system.Exceptions.CustomException;
-import com.spring.hotel.management.system.hotel.reservation.system.controller.ReservationRestController;
 import com.spring.hotel.management.system.hotel.reservation.system.entity.Reservation;
 import com.spring.hotel.management.system.hotel.reservation.system.entity.Room;
 import com.spring.hotel.management.system.hotel.reservation.system.entity.RoomType;
-import com.spring.hotel.management.system.hotel.reservation.system.model.ReservationModel;
-import com.spring.hotel.management.system.hotel.reservation.system.model.RoomTypeModel;
 import com.spring.hotel.management.system.hotel.reservation.system.repositories.IReservationRepository;
 import com.spring.hotel.management.system.hotel.reservation.system.repositories.IRoomRerpository;
 import com.spring.hotel.management.system.hotel.reservation.system.repositories.IRoomTypesRepository;
 import com.spring.hotel.management.system.hotel.reservation.system.util.ConstantsUtil;
 import com.spring.hotel.management.system.hotel.reservation.system.util.RuleEnum;
 import com.spring.hotel.management.system.hotel.reservation.system.util.SuccessResponse;
-
-import net.bytebuddy.asm.Advice.Local;
 
 /**
  * @author Vikas Ramesh Kondvilkar
@@ -92,19 +84,21 @@ public class ReservationService
 		Room room = roomRepository.findByRoomType(roomtype).stream().findFirst().orElse(null);
 		Long reservationNo = randomUUid.timestamp();
 		 SuccessResponse successResponse = new SuccessResponse();
-		if(room!= null && room.getId()!= null)
+	 if(noOfGuests > roomtype.getCapacity())
+		{
+			successResponse.setMessage(ConstantsUtil.GUESTS_MORE_THAN_CAPACITY);
+		    successResponse.setStatus(ConstantsUtil.STATUS_CODE_DATA_NOT_AVAILABLE);
+		}else if(room!= null && room.getId()!= null)
 		{	
-			reservationEntity.setReservationNo(reservationNo.toString());
-			reservationEntity.setRoom(room);
-			reservationEntity.setCheckInDt(checkIndate);
-			reservationEntity.setCheckOutDt(checkOutdate);
-			//reservationEntity.setGuests(guests);
-			reservationEntity.setNoOfGuests(noOfGuests);
+				successResponse.setMessage(ConstantsUtil.AVAILABLE);
+			    successResponse.setStatus(ConstantsUtil.STATUS_CODE_SUCCESS);
 		}
-		reservationRepository.save(reservationEntity);
+		else {
+			successResponse.setMessage(ConstantsUtil.NOT_AVAILABLE);
+		    successResponse.setStatus(ConstantsUtil.STATUS_CODE_DATA_NOT_AVAILABLE);
+		}
 		
-		 successResponse.setMessage(ConstantsUtil.SUCCESS_MESSAGE);
-		    successResponse.setStatus(ConstantsUtil.STATUS_CODE_SUCCESS);
+		
 		    return new ResponseEntity<>(successResponse, HttpStatus.OK);
 	}
 	
@@ -300,9 +294,36 @@ public class ReservationService
 	/**
 	 * @Param
 	   @return
+	 * @throws Exception 
 	 */
-	public ResponseEntity<?> roomReservation(Map<String, String> body) {
-		return null;
+	public ResponseEntity<?> roomReservation(Map<String, String> requestBody) throws Exception {
+
+		validateRoomAvailibilityFilelds(requestBody);
+		Reservation reservationEntity = new Reservation();
+		
+		RoomType roomtype= roomTyperepository.findByRoomType(requestBody.get(ConstantsUtil.ROOM_TYPE));
+		LocalDate checkIndate = StringToLocalDate(requestBody.get(ConstantsUtil.CHECK_IN_DATE));
+		LocalDate checkOutdate = StringToLocalDate(requestBody.get(ConstantsUtil.CHECK_OUT_DATE));
+		int noOfGuests = Integer.valueOf(requestBody.get(ConstantsUtil.NO_OF_GUESTS));
+		UUID randomUUid  = UUID.randomUUID();
+		Room room = roomRepository.findByRoomType(roomtype).stream().findFirst().orElse(null);
+		Long reservationNo = randomUUid.timestamp();
+		 SuccessResponse successResponse = new SuccessResponse();
+		if(room!= null && room.getId()!= null)
+		{	
+			reservationEntity.setReservationNo(reservationNo.toString());
+			reservationEntity.setRoom(room);
+			reservationEntity.setCheckInDt(checkIndate);
+			reservationEntity.setCheckOutDt(checkOutdate);
+			//reservationEntity.setGuests(guests);
+			reservationEntity.setNoOfGuests(noOfGuests);
+		}
+		reservationRepository.save(reservationEntity);
+		
+		 successResponse.setMessage(ConstantsUtil.SUCCESS_MESSAGE);
+		    successResponse.setStatus(ConstantsUtil.STATUS_CODE_SUCCESS);
+		    return new ResponseEntity<>(successResponse, HttpStatus.OK);
+	
 	}
 
 	/**

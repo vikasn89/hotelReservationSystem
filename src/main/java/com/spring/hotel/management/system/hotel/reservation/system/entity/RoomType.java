@@ -45,7 +45,7 @@ public class RoomType implements Serializable{
 	private String features;
 	
 	@Column(name="capacity")
-	private String capacity;
+	private Integer capacity;
 
 	public Long getId() {
 		return id;
@@ -87,11 +87,19 @@ public class RoomType implements Serializable{
 		this.features = features;
 	}
 
+	public Integer getCapacity() {
+		return capacity;
+	}
+
+	public void setCapacity(Integer capacity) {
+		this.capacity = capacity;
+	}
+
 	@Override
 	public String toString() {
 		return "RoomType [id=" + id + ", roomType=" + roomType
 				+ ", pricePerNight=" + pricePerNight + ", rooms=" + rooms
-				+ ", features=" + features + "]";
+				+ ", features=" + features + ", capacity=" + capacity + "]";
 	}
 
 }

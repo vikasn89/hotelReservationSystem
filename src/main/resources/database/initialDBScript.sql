@@ -3,6 +3,7 @@ CREATE TABLE hotel.room_types
     id bigint,
     room_type character varying(25),
     price_per_night bigint,
+   	capacity bigint;
     CONSTRAINT room_type_prmry_id PRIMARY KEY (id),
     CONSTRAINT room_type_unq_index UNIQUE (room_type)
 );

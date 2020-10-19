@@ -43,6 +43,9 @@ public final class ConstantsUtil
 	  public static final Boolean IS_USED_TRUE = true;
 	  public static final String IS_USED = "isUsed";
 	  public static final Boolean IS_USED_FALSE = false;
+	  public static final String AVAILABLE= "Room is available";
+	  public static final String NOT_AVAILABLE= "Room is not available";
+	  public static final String GUESTS_MORE_THAN_CAPACITY= "Number of guest more than capacity";
 	  
 	// Status codes
 	  public static final Integer STATUS_CODE_SUCCESS = 200;
